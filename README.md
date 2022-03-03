@@ -1,6 +1,6 @@
 <h1>InstagramClone</h1>
 
-In this project, In this project, I made an Instagram clone. I used firebase auth, firestore database and storage, I wrote it according to mvvm architecture.
+In this project, I made an Instagram clone. I used firebase auth, firestore database and storage, I wrote it according to mvvm architecture.
 
 
 <h3>Libraries Used</h3>
