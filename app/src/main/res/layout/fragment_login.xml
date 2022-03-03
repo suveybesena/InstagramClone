@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.login.LoginFragment">
+
+
+
+    <ImageView
+        android:layout_width="368dp"
+        android:layout_height="112dp"
+        android:layout_margin="50dp"
+        android:layout_marginTop="136dp"
+        android:src="@drawable/instagramlogo"
+        app:layout_constraintBottom_toTopOf="@+id/edt_login_mail"
+        app:layout_constraintEnd_toEndOf="@+id/edt_login_mail"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="@+id/edt_login_mail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></ImageView>
+
+    <Button
+        android:id="@+id/btw_login"
+        style="@style/login_btn"
+        android:onClick="login"
+        android:layout_width="374dp"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:text="LOGIN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_login_password"></Button>
+
+    <EditText
+        android:id="@+id/edt_login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="92dp"
+        android:background="@drawable/login_input_bg"
+        android:hint="Password"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:ems="10"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="427dp"
+        app:layout_constraintBottom_toTopOf="@+id/btw_login"
+        app:layout_constraintEnd_toEndOf="@+id/edt_login_mail"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edt_login_mail">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edt_login_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/login_input_bg"
+        android:hint="Email"
+        android:padding="10dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/edt_login_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/tw_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/login_input_bg"
+        android:foregroundGravity="bottom"
+        android:gravity="center"
+        android:text="Don't have an account? Sign up."
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btw_login"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp"></TextView>
+
+    <ProgressBar
+        android:id="@+id/login_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        ></ProgressBar>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

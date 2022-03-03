@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".presentation.profile.ProfileFragment">
+
+    <include layout="@layout/top_bar"></include>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp">
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imw_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/van"
+         />
+
+    <TextView
+        android:id="@+id/tw_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_name"
+
+        ></TextView>
+</LinearLayout>
+
+            <LinearLayout
+                android:layout_width="271dp"
+                android:layout_height="113dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:paddingLeft="7dp">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/post_count"
+                            style="@style/profile_text_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            app:layout_constraintEnd_toStartOf="@+id/followers_count"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                        <TextView
+                            android:id="@+id/tw_post"
+                            style="@style/profile_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="posts"
+                            app:layout_constraintEnd_toEndOf="@+id/post_count"
+                            app:layout_constraintStart_toStartOf="@+id/post_count"
+                            app:layout_constraintTop_toBottomOf="@+id/post_count"></TextView>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layout_followers"
+                        android:onClick="followers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:id="@+id/followers_count"
+                            style="@style/profile_text_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            app:layout_constraintEnd_toStartOf="@+id/following_count"
+                            app:layout_constraintStart_toEndOf="@+id/post_count"
+                            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                        <TextView
+                            android:id="@+id/tw_followers"
+                            style="@style/profile_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="followers"
+                            app:layout_constraintEnd_toEndOf="@+id/followers_count"
+                            app:layout_constraintStart_toStartOf="@+id/followers_count"
+                            app:layout_constraintTop_toBottomOf="@+id/followers_count"></TextView>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layout_following"
+                        android:onClick="following"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        >
+                        <TextView
+                            android:id="@+id/following_count"
+                            style="@style/profile_text_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/followers_count"
+                            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+                        <TextView
+                            android:id="@+id/tw_following"
+                            style="@style/profile_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="following"
+                            app:layout_constraintEnd_toEndOf="@+id/following_count"
+                            app:layout_constraintStart_toStartOf="@+id/following_count"
+                            app:layout_constraintTop_toBottomOf="@+id/following_count"></TextView>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_border"
+        android:onClick="onclickEditProfile"
+        android:text="Edıt Profıle"
+        android:textColor="@color/black"
+        android:textSize="10dp"
+        ></Button>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_posts_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

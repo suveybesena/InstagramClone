@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.suveybesena.instagramclone.presentation.profile.ProfileFragment"
+        android:label="Instagram"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_editFragment"
+            app:destination="@id/editFragment" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_followingFragment"
+            app:destination="@id/followingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_followersFragment"
+            app:destination="@id/followersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="com.suveybesena.instagramclone.presentation.share.ShareFragment"
+        android:label="Instagram"
+        tools:layout="@layout/fragment_share">
+        <action
+            android:id="@+id/action_shareFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="location"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null"
+            />
+        <action
+            android:id="@+id/action_shareFragment_to_getUserLocationFragment"
+            app:destination="@id/getUserLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/likesFragment"
+        android:name="com.suveybesena.instagramclone.presentation.likes.LikesFragment"
+        android:label="Instagram"
+        tools:layout="@layout/fragment_likes">
+        />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.suveybesena.instagramclone.presentation.login.LoginFragment"
+        android:label="Instagram"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.suveybesena.instagramclone.presentation.home.HomeFragment"
+        android:label="Instagram"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_likesFragment"
+            app:destination="@id/likesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.suveybesena.instagramclone.presentation.search.SearchFragment"
+        android:label="Instagram"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.suveybesena.instagramclone.presentation.edit.EditFragment"
+        android:label="Instagram"
+        tools:layout="@layout/fragment_edit">
+        <action
+            android:id="@+id/action_editFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.suveybesena.instagramclone.presentation.register.RegisterFragment"
+        android:label="RegisterFragment">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/followingFragment"
+        android:name="com.suveybesena.instagramclone.presentation.following.FollowingFragment"
+        android:label="fragment_following"
+        tools:layout="@layout/fragment_following">
+        <action
+            android:id="@+id/action_followingFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/followersFragment"
+        android:name="com.suveybesena.instagramclone.presentation.followers.FollowersFragment"
+        android:label="fragment_followers"
+        tools:layout="@layout/fragment_followers" >
+        <action
+            android:id="@+id/action_followersFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/getUserLocationFragment"
+        android:name="com.suveybesena.instagramclone.presentation.map.GetUserLocationFragment"
+        android:label="GetUserLocationFragment" >
+        <action
+            android:id="@+id/action_getUserLocationFragment_to_shareFragment"
+            app:destination="@id/shareFragment" />
+    </fragment>
+</navigation>

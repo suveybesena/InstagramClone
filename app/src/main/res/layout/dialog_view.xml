@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/login_input_bg"
+    android:padding="20dp">
+
+
+    <Button
+        android:id="@+id/dialog_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_input_bg"
+        android:text="No"
+        app:layout_constraintStart_toEndOf="@id/dialog_yes"
+        app:layout_constraintTop_toBottomOf="@id/dialog_text"
+        tools:layout_editor_absoluteX="98dp"
+        android:layout_margin="10dp"
+        tools:layout_editor_absoluteY="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        ></Button>
+
+    <TextView
+        android:id="@+id/dialog_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Are you sure you want to exit?"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dialog_no"
+        tools:layout_editor_absoluteY="28dp">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/dialog_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Yes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/dialog_no"
+        app:layout_constraintTop_toBottomOf="@id/dialog_text"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="56dp"></Button>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

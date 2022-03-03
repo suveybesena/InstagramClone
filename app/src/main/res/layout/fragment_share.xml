@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.share.ShareFragment"
+    android:orientation="vertical"
+
+    >
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/whitesh"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/btw_close_post"
+                android:layout_width="9dp"
+                android:onClick="closePost"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_close_24"
+
+                ></ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:padding="5dp"
+                android:gravity="center_vertical"
+                android:text="New Post"
+                android:textSize="19sp"
+                android:textStyle="bold"></TextView>
+            <ImageView
+                android:id="@+id/btw_save_post"
+                android:layout_width="12dp"
+                android:onClick="savePost"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_check"
+
+                ></ImageView>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tw_get_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get a location."
+        android:background="@drawable/border_bg"
+        android:onClick="getLocation"
+        android:layout_marginStart="15dp"
+        android:layout_margin="20dp"
+        android:padding="13dp"
+></TextView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imw_share"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="imwPickedImage"
+
+            android:src="@drawable/van"></ImageView>
+
+
+        <EditText
+            android:id="@+id/edt_comment"
+            android:layout_width="272dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="Enter a caption here..."
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imw_share"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="56dp">
+
+        </EditText>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="408dp">
+
+        <ProgressBar
+            android:id="@+id/share_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</LinearLayout>

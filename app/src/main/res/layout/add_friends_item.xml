@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iw_user"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/van"
+            android:layout_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+           ></de.hdodenhof.circleimageview.CircleImageView>
+
+        <TextView
+            android:id="@+id/tw_name"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="suveybesena"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iw_user"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <Button
+            android:id="@+id/bw_follow"
+            style="@style/small_btn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Follow"
+            android:visibility="gone"
+            android:textSize="12dp"
+            tools:layout_editor_absoluteX="255dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/item_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tw_name"
+            tools:layout_editor_absoluteY="16dp"></Button>
+
+        <Button
+            android:id="@+id/bw_unfollow"
+            style="@style/secondary_small_btn"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Unfollow"
+            android:visibility="gone"
+            android:textSize="12dp"
+            tools:layout_editor_absoluteX="255dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/item_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tw_name"
+            tools:layout_editor_absoluteY="16dp"></Button>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="profile_text" parent="text"></style>
+    <style name="profile_text_count" parent="text">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="edit_profile_text" parent="text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="login_btn">
+        <item name="android:background">@drawable/login_btn</item>
+        <item name="android:textColor">@color/login_btn_color</item>
+        <item name="android:stateListAnimator">@animator/login_btn_animator</item>
+
+    </style>
+
+    <style name="small_btn">
+        <item name="android:background">@drawable/login_btn</item>
+        <item name="android:stateListAnimator">@animator/login_btn_animator</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+
+    <style name="secondary_small_btn">
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:stateListAnimator">@animator/login_btn_animator</item>
+
+    </style>
+
+
+
+
+
+
+
+
+</resources>
