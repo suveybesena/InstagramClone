@@ -18,3 +18,10 @@ In this project, I made an Instagram clone. I used firebase auth, firestore data
 <li>Navigation</li>
 </ul>
 
+<img src="https://user-images.githubusercontent.com/85364012/156832229-25a5f0c2-d93e-45a1-bf5f-a8ffcb918f3a.png"width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/85364012/156832462-a43b3e19-1a81-49cc-aaf4-dd8ead4005dc.png"width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/85364012/156832467-e3e9bd89-a44b-442d-a76f-9807db540dee.png"width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/85364012/156832468-b046e67c-23b2-4597-b934-ccbc759aa0f0.png"width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/85364012/156832471-0c5fc796-2ffa-4609-b49b-6dcf5dd28be3.png"width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/85364012/156832474-00d2f2ce-fbfd-47eb-9d42-26f78591bf38.png"width=30% height=30%>
+
