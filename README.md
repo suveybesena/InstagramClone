@@ -9,7 +9,9 @@ In this project, I made an Instagram clone. I used firebase auth, firestore data
 <li>Firebase Storage</li>
 <li>Firebase Firestore</li>
   <li>Viewbinding</li>
-    <li>Bottom navigation bar</li>
+  <li>Bottom navigation bar</li>
+ <li>Glide</li>
+  <li>Google Maps SDK</li>
 </ul>
 <h3>Architecture</h3>
 <ul>
