@@ -10,8 +10,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.suveybesena.instagramclone.model.User
+import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SearchViewModel : ViewModel() {
+@HiltViewModel
+class SearchViewModel @Inject
+    constructor( var instance : FirebaseInstance)
+    : ViewModel() {
 
     private val userList = MutableLiveData<ArrayList<User>?>()
     val _userList = userList
@@ -27,8 +33,8 @@ class SearchViewModel : ViewModel() {
     fun retrieveUsers(searchText: String) {
         loadingState.value = true
         val tempUserList = ArrayList<User>()
-        val firebase = FirebaseFirestore.getInstance()
-        firebase.collection("UsersName")
+
+        instance.firestore.collection("UsersName")
             .orderBy("name")
             .startAt(searchText)
             .endAt(searchText + "\uf8ff")
@@ -83,11 +89,11 @@ class SearchViewModel : ViewModel() {
     }
 
     fun unFollow(userId: String) {
-        val currentUser = auth.currentUser?.uid
-        currentUser.let { uid ->
-            if (currentUser != null) {
+
+        instance.currentUserId.let { uid ->
+            if (instance.currentUserId != null) {
                 FirebaseFirestore.getInstance()
-                    .collection("UsersName").document(currentUser)
+                    .collection("UsersName").document(instance.currentUserId.toString())
                     .update("following", FieldValue.arrayRemove(userId))
                     .addOnSuccessListener { Log.d(ContentValues.TAG, "success") }
                     .addOnFailureListener { e -> Log.w(ContentValues.TAG, "error", e) }
@@ -95,11 +101,11 @@ class SearchViewModel : ViewModel() {
 
         }
 
-        currentUser.let { uid ->
-            if (currentUser != null) {
+        instance.currentUserId.let { uid ->
+            if (instance.currentUserId != null) {
                 FirebaseFirestore.getInstance()
                     .collection("UsersName").document(userId)
-                    .update("followers", FieldValue.arrayRemove(currentUser))
+                    .update("followers", FieldValue.arrayRemove(instance.currentUserId))
                     .addOnSuccessListener { Log.d(ContentValues.TAG, "success") }
                     .addOnFailureListener { e -> Log.w(ContentValues.TAG, "error", e) }
             }

@@ -13,9 +13,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.suveybesena.instagramclone.R
 import com.suveybesena.instagramclone.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment(), TextWatcher {
 
     private var mAuth = FirebaseAuth.getInstance()
@@ -30,7 +31,7 @@ class LoginFragment : Fragment(), TextWatcher {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater)
         return binding.root
     }

@@ -15,11 +15,12 @@ import com.suveybesena.instagramclone.databinding.FragmentHomeBinding
 import com.suveybesena.instagramclone.model.Firebase
 import com.suveybesena.instagramclone.presentation.likes.LikesViewModel
 import com.suveybesena.instagramclone.presentation.likes.UnlikeInterface
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_view.*
 import kotlinx.android.synthetic.main.feed_recycler_row.*
 import kotlinx.android.synthetic.main.top_bar.*
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
@@ -51,7 +52,7 @@ class HomeFragment : Fragment() {
         feed = FeedAdapter(userListFirebase,
             object : LikesInterface {
             override fun likeItemClick(image: String) {
-                LikesViewModel().getLikesImage( image)
+                viewModel.getLikesImage( image)
             }
         },object : FeedLikesInterface{
             override fun getLikes(image: String, like :ImageView, unlike :ImageView) {
@@ -70,7 +71,7 @@ class HomeFragment : Fragment() {
         } ,
         object :UnlikeInterface{
             override fun unlikeItemClick(image: String) {
-                LikesViewModel().removeLike(image)
+                viewModel.removeLike(image)
             }
 
         })

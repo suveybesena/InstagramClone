@@ -25,9 +25,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.suveybesena.instagramclone.R
 import com.suveybesena.instagramclone.databinding.FragmentEditBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_edit.*
 
-
+@AndroidEntryPoint
 class EditFragment : Fragment() {
     private lateinit var storage: FirebaseStorage
     private lateinit var auth: FirebaseAuth

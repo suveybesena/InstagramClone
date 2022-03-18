@@ -10,8 +10,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.suveybesena.instagramclone.R
+import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject
+    constructor(var instance : FirebaseInstance)
+    : ViewModel() {
 
     private val loadingState = MutableLiveData<Boolean>()
     val _loadingState = loadingState
@@ -20,9 +26,9 @@ class RegisterViewModel : ViewModel() {
     private val authState = MutableLiveData<Boolean>()
     val _authState = authState
 
-    private var auth = FirebaseAuth.getInstance()
-    private var firebase = FirebaseFirestore.getInstance()
-    private var storage = FirebaseStorage.getInstance()
+
+
+
 
 
     fun register(
@@ -33,6 +39,7 @@ class RegisterViewModel : ViewModel() {
         username: String,
         name: String
     ) {
+
         loadingState.value = true
         val user = hashMapOf<String, Any>()
         user.put("name", username)
@@ -42,9 +49,9 @@ class RegisterViewModel : ViewModel() {
         user.put("website", "www.test.com")
         user.put("image", pickedImage)
 
-        auth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener { task ->
+        instance.auth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                auth.currentUser?.let { user.put("uid", it.uid) }
+                instance.currentUser?.let { user.put("uid", it.uid) }
                 uploadPhoto(pickedImage, username)
                 view.let { view ->
                     authState.value = true
@@ -59,22 +66,22 @@ class RegisterViewModel : ViewModel() {
 
     fun uploadPhoto(pickedImage: Uri, username: String) {
 
-        var uid = auth.currentUser?.uid.toString()
-        val reference = storage.reference
-        val imageReference = reference.child("images").child(uid)
+
+        val reference = instance.storage.reference
+        val imageReference = reference.child("images").child(instance.currentUserId.toString())
 
         imageReference.putFile(pickedImage).addOnSuccessListener { taskSnapshot ->
 
             val uploadedImageReference =
-                FirebaseStorage.getInstance().reference.child("images").child(uid)
+                FirebaseStorage.getInstance().reference.child("images").child(instance.currentUserId.toString())
             uploadedImageReference.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
                 val postHashmap = hashMapOf<String, Any>()
                 postHashmap.put("image", imageUrl)
                 postHashmap.put("name", username)
-                postHashmap.put("uid", auth.currentUser!!.uid)
+                postHashmap.put("uid", instance.currentUserId.toString())
 
-                firebase.collection("UsersName").document(auth.currentUser!!.uid).set(postHashmap)
+                instance.firestore.collection("UsersName").document(instance.currentUserId.toString()).set(postHashmap)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             loadingState.value = false

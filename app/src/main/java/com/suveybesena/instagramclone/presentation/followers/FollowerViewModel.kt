@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.suveybesena.instagramclone.model.FollowersModel
-
-class FollowerViewModel : ViewModel() {
-
-    private var auth = FirebaseAuth.getInstance()
+import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import com.suveybesena.instagramclone.utils.extensions.Resources
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+@HiltViewModel
+class FollowerViewModel @Inject constructor(
+    var instance: FirebaseInstance
+): ViewModel() {
 
     private val followerState = MutableLiveData<List<FollowersModel>>()
     var _followerState = followerState
@@ -17,18 +21,18 @@ class FollowerViewModel : ViewModel() {
     val _loadingState = loadingState
     private val errorState = MutableLiveData<String>()
     val _errorState = errorState
-    val currentUserId = auth.currentUser?.uid
 
-    val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+
     var tempList = ArrayList<FollowersModel>()
     var name = ""
     var image = ""
 
     fun getFollowersId() {
-        auth = FirebaseAuth.getInstance()
 
-        if (currentUserId != null) {
-            firestore.collection("UsersName").document(currentUserId)
+
+        if (instance.currentUserId != null) {
+            instance.firestore.collection("UsersName").document(instance.currentUserId.toString())
                 .addSnapshotListener { value, error ->
                     if (error != null) {
                         errorState.value = error.localizedMessage
@@ -37,9 +41,11 @@ class FollowerViewModel : ViewModel() {
                     if (doc != null) {
                         getFollowersProfiles(doc)
                     } else {
+
                         errorState.value = error?.localizedMessage
                     }
                 }
+
         }
 
     }
@@ -48,7 +54,7 @@ class FollowerViewModel : ViewModel() {
         loadingState.value = true
         tempList.clear()
         followerIdList.forEach { followerId ->
-            firestore.collection("UsersName").document(followerId)
+            instance.firestore.collection("UsersName").document(followerId)
                 .addSnapshotListener { value, error ->
                     if (error != null) {
                         loadingState.value = false

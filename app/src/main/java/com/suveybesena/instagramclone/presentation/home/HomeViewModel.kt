@@ -1,21 +1,27 @@
 package com.suveybesena.instagramclone.presentation.home
 
 
+import android.content.ContentValues
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.suveybesena.instagramclone.model.Firebase
+import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
+@HiltViewModel
+class HomeViewModel @Inject
+    constructor(
+    var instance : FirebaseInstance
+    ): ViewModel() {
 
-class HomeViewModel : ViewModel() {
-
-
-    private var firebase = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
 
     private val firebaseList = MutableLiveData<List<Firebase>>()
     val _firebaseList = firebaseList
@@ -30,12 +36,12 @@ class HomeViewModel : ViewModel() {
     private var allInOne = HashMap<String, String>()
     private var userImage = ""
     val tempUserList = ArrayList<Firebase>()
-    var currentUserId = auth.currentUser?.uid
+
 
 
     fun readUserData() {
 
-        firebase.collection("UsersName").document(currentUserId.toString())
+        instance.firestore.collection("UsersName").document(instance.currentUserId.toString())
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     errorState.value = error.localizedMessage
@@ -51,7 +57,7 @@ class HomeViewModel : ViewModel() {
     private fun getFollowerFeed(doc: List<String>) {
         doc.forEach { following ->
             loadingState.value = true
-            firebase.collection("feedImages").whereEqualTo("uid", following)
+            instance.firestore.collection("feedImages").whereEqualTo("uid", following)
                 .orderBy("date", Query.Direction.DESCENDING)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception != null) {
@@ -70,7 +76,7 @@ class HomeViewModel : ViewModel() {
                                     val location = document.get("location") as String
 
                                     tempUserList.clear()
-                                    firebase.collection("UsersName")
+                                    instance.firestore.collection("UsersName")
                                         .whereEqualTo("uid", following)
                                         .addSnapshotListener { snap, except ->
                                             if (except != null) {
@@ -121,7 +127,7 @@ class HomeViewModel : ViewModel() {
 
     fun checkLikeStatus(image: String, like: ImageView, unLike: ImageView) {
 
-        FirebaseFirestore.getInstance().collection("UsersName").document(currentUserId.toString())
+       instance.firestore.collection("UsersName").document(instance.currentUserId.toString())
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     errorState.value = error.localizedMessage
@@ -143,6 +149,22 @@ class HomeViewModel : ViewModel() {
                 }
             }
 
+
+    }
+
+
+    fun getLikesImage(image: String) {
+        instance.firestore.collection("UsersName").document(instance.currentUserId.toString()).update(
+            "likes", FieldValue.arrayUnion(image)
+        )
+            .addOnSuccessListener { Log.d(ContentValues.TAG, "success") }
+            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "error", e) }
+    }
+
+    fun removeLike (image : String){
+        instance.firestore.collection("UsersName").document(instance.currentUserId.toString()).update(
+            "likes", FieldValue.arrayRemove(image)
+        )
 
     }
 

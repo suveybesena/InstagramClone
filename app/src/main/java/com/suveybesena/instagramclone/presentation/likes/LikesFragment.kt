@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.suveybesena.instagramclone.databinding.FragmentLikesBinding
 import com.suveybesena.instagramclone.model.LikesModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_likes.*
 
-
+@AndroidEntryPoint
 class LikesFragment : Fragment() {
 
     private val viewModel: LikesViewModel by viewModels()

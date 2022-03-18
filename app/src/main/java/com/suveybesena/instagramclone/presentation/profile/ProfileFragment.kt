@@ -14,8 +14,9 @@ import com.suveybesena.instagramclone.R
 import com.suveybesena.instagramclone.databinding.FragmentProfileBinding
 import com.suveybesena.instagramclone.model.FollowModel
 import com.suveybesena.instagramclone.model.MyPostsModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     lateinit var list: List<FollowModel>

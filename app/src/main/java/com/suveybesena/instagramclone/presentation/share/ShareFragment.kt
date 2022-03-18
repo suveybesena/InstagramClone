@@ -22,8 +22,9 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.suveybesena.instagramclone.R
 import com.suveybesena.instagramclone.databinding.FragmentShareBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ShareFragment() : Fragment() {
 
     private lateinit var contentResolver: ContentResolver

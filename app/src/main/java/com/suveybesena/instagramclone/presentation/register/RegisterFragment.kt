@@ -21,9 +21,10 @@ import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.suveybesena.instagramclone.R
 import com.suveybesena.instagramclone.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_register.*
 
-
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
     private val viewModel: RegisterViewModel by viewModels()
     private lateinit var contentResolver: ContentResolver

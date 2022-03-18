@@ -12,10 +12,11 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.suveybesena.instagramclone.databinding.FragmentSearchBinding
 import com.suveybesena.instagramclone.model.User
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.add_friends_item.*
 import kotlinx.android.synthetic.main.add_friends_item.view.*
 
-
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var friendsAdapter: FriendsAdapter? = null

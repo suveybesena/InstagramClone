@@ -8,11 +8,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.suveybesena.instagramclone.model.LikesModel
+import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlin.collections.ArrayList
+@HiltViewModel
+class LikesViewModel @Inject
+    constructor(var instance : FirebaseInstance): ViewModel() {
 
-class LikesViewModel : ViewModel() {
-    private  var auth= FirebaseAuth.getInstance()
-    private  var firestore=  FirebaseFirestore.getInstance()
     private var likesList = MutableLiveData<List<LikesModel>?>()
     var _likesList = likesList
     private var errorState = MutableLiveData<String?>()
@@ -21,25 +24,15 @@ class LikesViewModel : ViewModel() {
     var _loadingState = loadingState
 
 
-    val currentUser = auth.currentUser
-    val uid = currentUser?.uid
 
     var tempList = ArrayList<LikesModel>()
 
 
-    fun getLikesImage(image: String) {
-        firestore.collection("UsersName").document(uid.toString()).update(
-            "likes", FieldValue.arrayUnion(image)
-        )
-            .addOnSuccessListener { Log.d(ContentValues.TAG, "success") }
-            .addOnFailureListener { e -> Log.w(ContentValues.TAG, "error", e) }
-    }
-
     fun loadImage() {
         loadingState.value = true
-        auth = FirebaseAuth.getInstance()
+
         tempList.clear()
-        firestore.collection("UsersName").document(uid.toString())
+        instance.firestore.collection("UsersName").document(instance.currentUserId.toString())
             .addSnapshotListener { value, exception ->
                 if (exception != null) {
                     likesList.value = null
@@ -61,11 +54,6 @@ class LikesViewModel : ViewModel() {
             }
 
 
-    fun removeLike (image : String){
-        firestore.collection("UsersName").document(uid.toString()).update(
-            "likes", FieldValue.arrayRemove(image)
-        )
 
-    }
 
 }

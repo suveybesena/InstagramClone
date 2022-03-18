@@ -9,8 +9,9 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.suveybesena.instagramclone.databinding.FragmentFollowersBinding
 import com.suveybesena.instagramclone.model.FollowersModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FollowersFragment : Fragment() {
     private val viewModel: FollowerViewModel by viewModels()
     private lateinit var followersAdapter: FollowersAdapter

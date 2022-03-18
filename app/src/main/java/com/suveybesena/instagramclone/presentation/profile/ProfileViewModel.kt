@@ -5,10 +5,15 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.suveybesena.instagramclone.model.MyPostsModel
+import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ProfileViewModel : ViewModel() {
-    private val auth = FirebaseAuth.getInstance()
-    private val firebase = FirebaseFirestore.getInstance()
+@HiltViewModel
+class ProfileViewModel  @Inject
+    constructor( var instance : FirebaseInstance)
+    : ViewModel() {
+
 
     private val nameState = MutableLiveData<String>()
     val _nameState = nameState
@@ -26,8 +31,8 @@ class ProfileViewModel : ViewModel() {
 
     fun getDataFromFirebase() {
         loadingState.value = true
-        val currentUser = auth.currentUser?.uid
-        firebase.collection("UsersName").whereEqualTo("uid", currentUser)
+
+        instance.firestore.collection("UsersName").whereEqualTo("uid", instance.currentUserId.toString())
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
                     loadingState.value = false
@@ -52,8 +57,8 @@ class ProfileViewModel : ViewModel() {
             }
 
 
-        val currentUserUid = auth.currentUser?.uid.toString()
-        firebase.collection("feedImages").whereEqualTo("uid", currentUserUid)
+
+        instance.firestore.collection("feedImages").whereEqualTo("uid", instance.currentUserId.toString())
             .orderBy("date")
             .addSnapshotListener { value, error ->
                 if (error!=null){
