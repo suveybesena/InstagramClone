@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import com.suveybesena.instagramclone.di.FirebaseModule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class EditViewModel @Inject constructor(var instance : FirebaseInstance) : ViewModel() {
+class EditViewModel @Inject constructor(var firebaseInstance : FirebaseFirestore,
+                                        var storageInstance : FirebaseStorage,
+                                        var authInstance : FirebaseAuth) : ViewModel() {
 
 
     private val loadingState = MutableLiveData<Boolean>()
@@ -22,17 +24,17 @@ class EditViewModel @Inject constructor(var instance : FirebaseInstance) : ViewM
 
 
     fun saveEdit(name: String, surname: String, bio: String, webSite: String, pickedImage: Uri) {
-
-        instance.storage.reference.child("images").child(instance.currentUserId.toString()).delete()
+        var currentUserId = authInstance.currentUser?.uid.toString()
+        storageInstance.reference.child("images").child(currentUserId).delete()
         val storage =
-            instance.storage.reference.child("images").child(instance.currentUserId.toString())
+            storageInstance.reference.child("images").child(currentUserId)
         storage.putFile(pickedImage)
         storage.downloadUrl.addOnSuccessListener { uri ->
             val imageUrl = uri.toString()
 
 
 
-            instance.firestore.collection("UsersName").document(instance.currentUserId.toString())
+            firebaseInstance.collection("UsersName").document(currentUserId)
                 .update(
                     mapOf(
                         "name" to name,

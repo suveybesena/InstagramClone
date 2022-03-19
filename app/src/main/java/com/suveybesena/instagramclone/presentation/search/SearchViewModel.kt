@@ -9,14 +9,16 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.suveybesena.instagramclone.model.User
-import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import com.suveybesena.instagramclone.di.FirebaseModule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject
-    constructor( var instance : FirebaseInstance)
+    constructor(var firebaseInstance : FirebaseFirestore,
+                var authInstance : FirebaseAuth)
     : ViewModel() {
 
     private val userList = MutableLiveData<ArrayList<User>?>()
@@ -25,16 +27,15 @@ class SearchViewModel @Inject
     val _errorState = errorState
     private val loadingState = MutableLiveData<Boolean>()
     val _loadingState = loadingState
-    private val auth = FirebaseAuth.getInstance()
     private val followState = MutableLiveData<Boolean>()
     val _followState = followState
-
+    val currentUserId = authInstance.currentUser?.uid.toString()
 
     fun retrieveUsers(searchText: String) {
         loadingState.value = true
         val tempUserList = ArrayList<User>()
 
-        instance.firestore.collection("UsersName")
+       firebaseInstance.collection("UsersName")
             .orderBy("name")
             .startAt(searchText)
             .endAt(searchText + "\uf8ff")
@@ -65,10 +66,10 @@ class SearchViewModel @Inject
     }
 
     fun follow(userId: String) {
-        val currentUser = auth.currentUser!!.uid
-        currentUser.let { uid ->
+
+        currentUserId.let { uid ->
             FirebaseFirestore.getInstance()
-                .collection("UsersName").document(currentUser).update(
+                .collection("UsersName").document(currentUserId).update(
                     "following", FieldValue.arrayUnion(
                         userId
                     )
@@ -79,7 +80,7 @@ class SearchViewModel @Inject
         FirebaseFirestore.getInstance()
             .collection("UsersName").document(userId).update(
                 "followers", FieldValue.arrayUnion(
-                    currentUser
+                    currentUserId
                 )
             )
             .addOnSuccessListener { Log.d(ContentValues.TAG, "success") }
@@ -90,10 +91,10 @@ class SearchViewModel @Inject
 
     fun unFollow(userId: String) {
 
-        instance.currentUserId.let { uid ->
-            if (instance.currentUserId != null) {
+        currentUserId.let { uid ->
+            if (currentUserId != null) {
                 FirebaseFirestore.getInstance()
-                    .collection("UsersName").document(instance.currentUserId.toString())
+                    .collection("UsersName").document(currentUserId)
                     .update("following", FieldValue.arrayRemove(userId))
                     .addOnSuccessListener { Log.d(ContentValues.TAG, "success") }
                     .addOnFailureListener { e -> Log.w(ContentValues.TAG, "error", e) }
@@ -101,11 +102,11 @@ class SearchViewModel @Inject
 
         }
 
-        instance.currentUserId.let { uid ->
-            if (instance.currentUserId != null) {
+        currentUserId.let { uid ->
+            if (currentUserId != null) {
                 FirebaseFirestore.getInstance()
                     .collection("UsersName").document(userId)
-                    .update("followers", FieldValue.arrayRemove(instance.currentUserId))
+                    .update("followers", FieldValue.arrayRemove(currentUserId))
                     .addOnSuccessListener { Log.d(ContentValues.TAG, "success") }
                     .addOnFailureListener { e -> Log.w(ContentValues.TAG, "error", e) }
             }

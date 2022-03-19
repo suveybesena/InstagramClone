@@ -6,13 +6,16 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import com.suveybesena.instagramclone.di.FirebaseModule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ShareViewModel @Inject
-    constructor(var instance : FirebaseInstance)
+    constructor(var firebaseInstance : FirebaseFirestore,
+                var storageInstance : FirebaseStorage,
+                var authInstance : FirebaseAuth
+)
     : ViewModel() {
 
 
@@ -23,17 +26,17 @@ class ShareViewModel @Inject
 
     fun imageDownloader(pickedImage: Uri, comment: String, location: String) {
         loadingState.value = true
+        val currentUserId = authInstance.currentUser?.uid.toString()
 
-
-        val imageReference = instance.storage.reference.child("feedImages").child(instance.currentUserId.toString())
+        val imageReference = storageInstance.reference.child("feedImages").child(currentUserId)
 
         imageReference.putFile(pickedImage).addOnSuccessListener { taskSnapshot ->
 
             val uploadedImageReference =
-                FirebaseStorage.getInstance().reference.child("feedImages").child(instance.currentUserId.toString())
+                FirebaseStorage.getInstance().reference.child("feedImages").child(currentUserId)
             uploadedImageReference.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-                val currentUserMail = instance.currentUser?.email.toString()
+                val currentUserMail = authInstance.currentUser?.email.toString()
                 val date = com.google.firebase.Timestamp.now()
 
                 val postHashmap = hashMapOf<String, Any>()
@@ -41,10 +44,10 @@ class ShareViewModel @Inject
                 postHashmap.put("currentUserMail", currentUserMail)
                 postHashmap.put("comment", comment)
                 postHashmap.put("date", date)
-                postHashmap.put("uid", instance.currentUserId.toString())
+                postHashmap.put("uid", currentUserId)
                 postHashmap.put("location", location)
 
-                instance.firestore.collection("feedImages").add(postHashmap).addOnCompleteListener { task ->
+               firebaseInstance.collection("feedImages").add(postHashmap).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         loadingState.value = false
                     }

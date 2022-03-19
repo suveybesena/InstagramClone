@@ -4,15 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.suveybesena.instagramclone.model.FollowModel
-import com.suveybesena.instagramclone.utils.extensions.FirebaseInstance
+import com.suveybesena.instagramclone.di.FirebaseModule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class FollowingViewModel
     @Inject constructor(
-        var instance :FirebaseInstance
+        var firebaseInstance : FirebaseFirestore,
+        var authInstance : FirebaseAuth
     )
     : ViewModel() {
 
@@ -30,10 +32,10 @@ class FollowingViewModel
     var image = ""
 
     fun getFollowersId() {
-        instance.auth = FirebaseAuth.getInstance()
+        var currentUserId = authInstance.currentUser?.uid
 
-        if (instance.currentUserId != null) {
-            instance.firestore.collection("UsersName").document(instance.currentUserId.toString())
+        if (currentUserId!= null) {
+            firebaseInstance.collection("UsersName").document(currentUserId.toString())
                 .addSnapshotListener { value, error ->
                     if (error != null) {
                         errorState.value = error.localizedMessage
@@ -53,7 +55,7 @@ class FollowingViewModel
         loadingState.value = true
         tempList.clear()
         followerIdList.forEach { followerId ->
-            instance.firestore.collection("UsersName").document(followerId)
+            firebaseInstance.collection("UsersName").document(followerId)
                 .addSnapshotListener { value, error ->
                     if (error != null) {
                         loadingState.value = false
