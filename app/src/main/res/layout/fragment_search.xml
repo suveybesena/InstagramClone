@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.search.SearchFragment"
+    android:padding="15dp"
 
-    android:padding="15dp">
+    tools:context=".presentation.search.SearchFragment">
 
     <ProgressBar
         android:id="@+id/pb_search_screen"
@@ -28,7 +28,7 @@
         android:src="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="@+id/edt_search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edt_search"/>
+        app:layout_constraintTop_toTopOf="@+id/edt_search" />
 
     <EditText
         android:id="@+id/edt_search"
@@ -37,7 +37,7 @@
         android:hint="Search"
         app:layout_constraintEnd_toStartOf="@id/iw_close"
         app:layout_constraintStart_toEndOf="@id/iw_search"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iw_close"
@@ -47,20 +47,36 @@
         android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="@+id/edt_search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edt_search"/>
+        app:layout_constraintTop_toTopOf="@+id/edt_search" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="380dp"
+        android:layout_height="403dp"
 
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/edt_search"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_search"
+        app:layout_constraintVertical_bias="0.146"
         tools:listitem="@layout/add_friends_item">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/contacts"
+        android:layout_width="78dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/ic_contacts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_recycler_view"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
