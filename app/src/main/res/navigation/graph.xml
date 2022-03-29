@@ -74,7 +74,14 @@
         android:id="@+id/searchFragment"
         android:name="com.suveybesena.instagramclone.presentation.search.SearchFragment"
         android:label="Instagram"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/editFragment"
         android:name="com.suveybesena.instagramclone.presentation.edit.EditFragment"
@@ -121,5 +128,13 @@
         <action
             android:id="@+id/action_getUserLocationFragment_to_shareFragment"
             app:destination="@id/shareFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="com.suveybesena.instagramclone.presentation.contacts.ContactsFragment"
+        android:label="ContactsFragment" >
+        <action
+            android:id="@+id/action_contactsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 </navigation>
