@@ -9,9 +9,13 @@ import android.widget.Button
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.suveybesena.instagramclone.R
 import com.suveybesena.instagramclone.databinding.FragmentSearchBinding
 import com.suveybesena.instagramclone.model.User
+import com.suveybesena.instagramclone.presentation.contacts.ContactsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.add_friends_item.*
 import kotlinx.android.synthetic.main.add_friends_item.view.*
@@ -37,6 +41,8 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getContacts()
         observeLiveData()
         initListeners()
     }
@@ -47,15 +53,14 @@ class SearchFragment : Fragment() {
                 viewModel.follow(userId)
                 bw_follow.visibility = View.GONE
                 bw_unfollow.visibility = View.VISIBLE
-
             }
         }, object : UnfollowInterface {
             override fun onItemClick(userId: String) {
                 viewModel.unFollow(userId)
                 bw_follow.visibility = View.VISIBLE
                 bw_unfollow.visibility = View.GONE
-
             }
+
         }, object : GetUserInterface {
             override fun getUserList(userId: String, follow: Button, unfollow: Button) {
                 viewModel.checkFollowingStatus(userId, follow, unfollow)
@@ -68,8 +73,6 @@ class SearchFragment : Fragment() {
                         follow.visibility = View.GONE
                     }
                 }
-
-
             }
 
         })
@@ -86,7 +89,26 @@ class SearchFragment : Fragment() {
             iwClose.setOnClickListener {
                 clearRecycler()
             }
+
+            contacts.setOnClickListener {
+                Navigation.findNavController(it).navigate(R.id.action_searchFragment_to_contactsFragment)
+            }
         }
+    }
+
+    private fun  getContacts(){
+        val args = this.arguments
+        val getContact = args?.get("name").toString()
+        try {
+            binding.apply {
+                viewModel.getContacts(getContact)
+                binding.searchRecyclerView.visibility = View.VISIBLE
+
+            }
+        }catch (e: Exception) {
+            println(e.localizedMessage)
+        }
+
     }
 
     private fun clearRecycler() {
@@ -103,6 +125,13 @@ class SearchFragment : Fragment() {
                 feedAdapter(arrayListUser)
             }
         }
+        viewModel._contactList.observe(viewLifecycleOwner){contactList->
+            contactList?.let {
+                feedAdapter(contactList)
+            }
+        }
+
+
         viewModel._loadingState.observe(viewLifecycleOwner) { loading ->
             binding.pbSearchScreen.visibility = if (loading == true) View.VISIBLE else View.GONE
         }

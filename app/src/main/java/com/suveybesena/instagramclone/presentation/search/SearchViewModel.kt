@@ -23,6 +23,8 @@ class SearchViewModel @Inject
 
     private val userList = MutableLiveData<ArrayList<User>?>()
     val _userList = userList
+    private val contactList = MutableLiveData<ArrayList<User>?>()
+    val _contactList = contactList
     private val errorState = MutableLiveData<String?>()
     val _errorState = errorState
     private val loadingState = MutableLiveData<Boolean>()
@@ -64,6 +66,42 @@ class SearchViewModel @Inject
                 }
             }
     }
+
+    fun getContacts(name: String) {
+        loadingState.value = true
+        val tempUserList = ArrayList<User>()
+        firebaseInstance.collection("UsersName")
+            .whereEqualTo("name", name)
+            .addSnapshotListener { snapshot, exception ->
+                tempUserList.clear()
+                if (snapshot != null) {
+                    if (!snapshot.isEmpty) {
+                        errorState.value = null
+                        val documentList = snapshot.documents
+                        for (document in documentList) {
+                            val username = document.get("name") as String?
+                            val image = document.get("image") as String?
+                            val uid = document.get("uid") as String?
+                            val user = User(username, image, uid)
+                            tempUserList.add(user)
+                            contactList.value = tempUserList
+                            loadingState.value = false
+                        }
+                    }
+                }
+
+                exception?.let { errorMessage ->
+                    contactList.value = null
+                    loadingState.value = false
+                    errorState.value = errorMessage.localizedMessage
+                }
+            }
+    }
+
+
+
+
+
 
     fun follow(userId: String) {
 
